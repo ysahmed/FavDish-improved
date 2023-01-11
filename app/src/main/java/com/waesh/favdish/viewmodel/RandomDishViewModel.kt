@@ -2,19 +2,14 @@ package com.waesh.favdish.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.waesh.favdish.model.database.FavDishRepository
-import com.waesh.favdish.model.entities.FavDish
 import com.waesh.favdish.model.entities.RandomDish
 import com.waesh.favdish.model.network.RandomDishApiService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class RandomDishViewModel(private val repository: FavDishRepository) : ViewModel() {
+class RandomDishViewModel: ViewModel() {
 
     private val randomDishApiService = RandomDishApiService()
     private val compositeDisposable = CompositeDisposable()
@@ -44,9 +39,4 @@ class RandomDishViewModel(private val repository: FavDishRepository) : ViewModel
                 })
         )
     }
-
-    fun insertDish(dish: FavDish) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insertDish(dish)
-    }
-
 }
