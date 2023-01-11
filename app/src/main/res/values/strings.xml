@@ -85,4 +85,5 @@
     <string name="btn_text_update">UPDATE</string>
     <string name="toast_item_restored">Item restored!</string>
     <string name="msg_already_added_to_favorite">Dish is already added to the favorite list.</string>
+    <string name="action_share_dish">Share</string>
 </resources>
