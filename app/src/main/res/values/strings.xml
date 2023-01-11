@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">FavDish</string>
+    <string name="title_all_dishes">All Dishes</string>
+    <string name="title_favorite_dishes">Favorite</string>
+    <string name="title_random_dish">Random Dish</string>
+    <string name="splash_title">Fav Dish</string>
+    <string name="menu_item_add_dish">Add dish</string>
+    <string name="image_contentDescription">image</string>
+
+    <string name="lbl_title">Title</string>
+    <string name="lbl_type">Type</string>
+    <string name="lbl_category">Category</string>
+    <string name="lbl_ingredients">Ingredients</string>
+    <string name="lbl_cooking_time_in_minutes">Cooking Time In Minutes</string>
+    <string name="lbl_direction_to_cook">Direction To Cook</string>
+    <string name="lbl_add_dish">ADD DISH</string>
+    <string name="title_select_image">Select Image Action</string>
+    <string name="title_select_type">Dish type</string>
+    <string name="title_select_category">Dish category</string>
+    <string name="title_select_time">Cooking Time</string>
+    <string name="lbl_camera">Camera</string>
+    <string name="lbl_gallery">Gallery</string>
+    <string name="desc_open_camera">Open camera</string>
+    <string name="desc_open_gallery">open gallery</string>
+    <string name="label_no_dish_added_yet">No dish added yet</string>
+
+    <string-array name="dishType">
+        <item>"Breakfast"</item>
+        <item>"Lunch"</item>
+        <item>"Dinner"</item>
+        <item>"Snack"</item>
+        <item>"Side dish"</item>
+        <item>"Salad"</item>
+        <item>"Dessert"</item>
+        <item>"Other"</item>
+    </string-array>
+
+    <string-array name="dishCategory">
+        <item>"Pizza"</item>
+        <item>"BBQ"</item>
+        <item>"Bakery"</item>
+        <item>"Burger"</item>
+        <item>"Cafe"</item>
+        <item>"Chicken"</item>
+        <item>"Dessert"</item>
+        <item>"Hot Dogs"</item>
+        <item>"Juices"</item>
+        <item>"Sandwich"</item>
+        <item>"Tea &amp; Coffee"</item>
+        <item>"Wraps"</item>
+        <item>"Others"</item>
+    </string-array>
+
+    <string-array name="cookingTime">
+        <item>"10 minutes"</item>
+        <item>"15 minutes"</item>
+        <item>"20 minutes"</item>
+        <item>"30 minutes"</item>
+        <item>"40 minutes"</item>
+        <item>"45 minutes"</item>
+        <item>"50 minutes"</item>
+        <item>"60 minutes"</item>
+        <item>"90 minutes"</item>
+        <item>"120 minutes"</item>
+        <item>">120 minutes"</item>
+        <item>"3 hours"</item>
+    </string-array>
+
+    <string name="all_dishes">All Dishes</string>
+    <string name="title_dish_detail">"Dish Detail"</string>
+    <string name="description_dish_image">Dish Image</string>
+    <string name="lbl_estimate_cooking_time">Estimated cooking time %1$s</string>
+    <string name="lbl_no_favorite_dish_added_yet">No favorite dishes added yet</string>
+    <string name="description_more">more</string>
+    <string name="menu_text_edit">Edit</string>
+    <string name="menu_text_delete">Delete</string>
+    <string name="alert_delete_title">Delete dish!</string>
+    <string name="alert_delete_message">Are you sure you want to delete %1$s?</string>
+    <string name="alert_delete_positive_text">Yes</string>
+    <string name="alert_delete_negative_text">No way!!</string>
+    <string name="snackbar_undo_message">%1$s has been deleted!</string>
+    <string name="snackbar_action_text">Undo</string>
+    <string name="menu_item_filter_dish">Filter dishes</string>
+    <string name="title_select_item_for_filter">Select item for filter</string>
+    <string name="btn_text_update">UPDATE</string>
+    <string name="toast_item_restored">Item restored!</string>
+    <string name="msg_already_added_to_favorite">Dish is already added to the favorite list.</string>
+</resources>
