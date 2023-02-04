@@ -1,6 +1,7 @@
 About
 ---
-Improved version of FavDish android application from Android 11 Jetpack Masterclass Udemy Course by Denis Panjuta.
+Improved version of FavDish android application from __Android 11 Jetpack Masterclass__ Udemy Course by ___Denis Panjuta___.
+This project is a playground for me. I will keep experimenting and modifiying the code as I learn more. 
 
 Improvements
 ---
