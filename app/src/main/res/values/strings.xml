@@ -86,4 +86,11 @@
     <string name="toast_item_restored">Item restored!</string>
     <string name="msg_already_added_to_favorite">Dish is already added to the favorite list.</string>
     <string name="action_share_dish">Share</string>
+
+    <string name="title_connection_error">Connectivity Error!!</string>
+    <string name="msg_connection_error">Failed to load new dish!\nPlease check WiFi or data connection.</string>
+    <string name="title_response_failed">Server Error!!</string>
+    <string name="msg_response_failed">Server failed to respond. Try again later.</string>
+
+    <string name="notification_title">New dish</string>
 </resources>

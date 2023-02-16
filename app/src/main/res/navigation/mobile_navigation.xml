@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_navigation_all_dishes_to_navigation_dish_details"
             app:destination="@id/navigation_dish_details" />
+        <action
+            android:id="@+id/action_navigation_all_dishes_to_navigation_random_dishes"
+            app:destination="@id/navigation_random_dishes" />
     </fragment>
 
     <fragment
@@ -28,7 +31,12 @@
         android:id="@+id/navigation_random_dishes"
         android:name="com.waesh.favdish.view.fragments.RandomDishFragment"
         android:label="@string/title_random_dish"
-        tools:layout="@layout/fragment_random_dish" />
+        tools:layout="@layout/fragment_random_dish" >
+        <argument
+            android:name="fromNotification"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_dish_details"
         android:name="com.waesh.favdish.view.fragments.DishDetailsFragment"

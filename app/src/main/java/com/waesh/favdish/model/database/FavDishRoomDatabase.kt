@@ -16,18 +16,23 @@ abstract class FavDishRoomDatabase : RoomDatabase() {
         private var INSTANCE: FavDishRoomDatabase? = null
 
         fun getDatabase(context: Context): FavDishRoomDatabase {
+            //DOUBLE CHECKED LOCKING
+            if (INSTANCE == null) {
+                synchronized(this) {
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            FavDishRoomDatabase::class.java,
+                            "fav_dish_database"
+                        )
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    }
 
-            if (INSTANCE == null){
-                synchronized(this){
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        FavDishRoomDatabase::class.java,
-                        "fav_dish_database")
-                        .fallbackToDestructiveMigration()
-                        .build()
                 }
             }
             return INSTANCE!!
+            //END
+        }
     }
-}
 }

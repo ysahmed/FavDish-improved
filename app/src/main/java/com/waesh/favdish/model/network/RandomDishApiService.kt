@@ -9,18 +9,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RandomDishApiService {
 
-    private val api = Retrofit.Builder()
+    private val retrofitInstance = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
-        .create(RandomDishAPI::class.java)
+        .create(RandomDishApiInterface::class.java)
 
     fun getRandomDish(): Single<RandomDish.Recipes> =
-        api.getRandomDish(
+        retrofitInstance.getRandomDish(
             Constants.API_KEY_VALUE,
             Constants.LIMIT_LICENSE_VALUE,
             Constants.TAGS_VALUE,
-            Constants.NUMBER_VALUE
+            Constants.NUMBER_OF_RECIPES
         )
 }

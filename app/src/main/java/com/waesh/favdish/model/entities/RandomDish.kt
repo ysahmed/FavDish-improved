@@ -1,22 +1,27 @@
 package com.waesh.favdish.model.entities
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
+
 object RandomDish {
 
     data class Recipes(
         val recipes: List<Recipe>
     )
 
+
+    @Parcelize
     data class Recipe(
         val aggregateLikes: Int,
-        val analyzedInstructions: List<AnalyzedInstruction>,
+        val analyzedInstructions: @RawValue List<AnalyzedInstruction>,
         val cheap: Boolean,
         val cookingMinutes: Int,
         val creditsText: String,
-        val cuisines: List<Any>,
         val dairyFree: Boolean,
         val diets: List<String>,
         val dishTypes: List<String>,
-        val extendedIngredients: List<ExtendedIngredient>,
+        val extendedIngredients: @RawValue List<ExtendedIngredient>,
         val gaps: String,
         val glutenFree: Boolean,
         val healthScore: Int,
@@ -26,8 +31,6 @@ object RandomDish {
         val instructions: String,
         val license: String,
         val lowFodmap: Boolean,
-        val occasions: List<Any>,
-        val originalId: Any,
         val preparationMinutes: Int,
         val pricePerServing: Double,
         val readyInMinutes: Int,
@@ -43,7 +46,7 @@ object RandomDish {
         val veryHealthy: Boolean,
         val veryPopular: Boolean,
         val weightWatcherSmartPoints: Int
-    )
+    ): Parcelable
 
     data class AnalyzedInstruction(
         val name: String,

@@ -17,6 +17,9 @@ interface FavDishDao {
     @Update
     suspend fun updateFavDishDetail (item: FavDish)
 
+    @Query("UPDATE fav_dish_table SET favorite_dish = :favorite WHERE title = :title")
+    suspend fun updateFavoriteByTitle(title: String, favorite: Boolean)
+
     @Query("SELECT * FROM fav_dish_table ORDER by id")
     fun getAllDishes(): Flow<List<FavDish>>
 

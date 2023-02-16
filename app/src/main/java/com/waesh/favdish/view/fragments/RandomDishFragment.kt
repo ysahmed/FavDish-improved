@@ -1,16 +1,17 @@
 package com.waesh.favdish.view.fragments
 
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.waesh.favdish.R
 import com.waesh.favdish.application.FavDishApplication
@@ -18,18 +19,20 @@ import com.waesh.favdish.databinding.FragmentRandomDishBinding
 import com.waesh.favdish.model.entities.FavDish
 import com.waesh.favdish.model.entities.RandomDish
 import com.waesh.favdish.util.Constants
-import com.waesh.favdish.viewmodel.FavDishViewModel
-import com.waesh.favdish.viewmodel.FavDishViewModelFactory
-import com.waesh.favdish.viewmodel.RandomDishViewModel
+import com.waesh.favdish.viewmodel.*
 
 class RandomDishFragment : Fragment() {
 
     private var _binding: FragmentRandomDishBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recipes: ListIterator<RandomDish.Recipe>
 
-    private lateinit var mViewModel: RandomDishViewModel
-    private var favorited = false   //LOL
-    private var inserted = false
+    val TAG = "RANDOMDISH"
+
+    private val viewModel by viewModels<RandomDishViewModelCoroutines> {
+        RandomDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,49 +45,62 @@ class RandomDishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mViewModel = ViewModelProvider(this)[RandomDishViewModel::class.java]
+        val args: RandomDishFragmentArgs by navArgs()
 
-        mViewModel.getRandomDishFromApi()
-        randomDishViewModelObserver()
+        if (args.fromNotification) {
+            setUi(viewModel.randomDish[0])
+        } else {
+            viewModel.getRandomDishes(15)
+        }
+
+        viewModel.apiResponse.observe(viewLifecycleOwner) {
+            it?.let { response ->
+                if (response.body() != null)
+                    recipes = response.body()!!.recipes.listIterator()
+
+                if (response.isSuccessful) {
+                    setUi(recipes.next())
+                } else
+                    showDialog(R.string.title_response_failed, R.string.msg_response_failed)
+
+            }
+        }
+
+        viewModel.connectionError.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.srlRandomDish.isRefreshing = false
+                showDialog(R.string.title_connection_error, R.string.msg_connection_error)
+            }
+        }
+
         binding.srlRandomDish.setOnRefreshListener {
-            mViewModel.getRandomDishFromApi()
-        }
-    }
-
-    private fun randomDishViewModelObserver() {
-        mViewModel.randomDishResponse.observe(
-            viewLifecycleOwner
-        ) { randomDishResponse ->
-            if (binding.srlRandomDish.isRefreshing) {
-                binding.srlRandomDish.isRefreshing = false
-            }
-            randomDishResponse?.let {
-                setInUi(randomDishResponse.recipes[0])
-            }
-        }
-
-        mViewModel.randomDishLoadError.observe(viewLifecycleOwner) { dataError ->
-            if (binding.srlRandomDish.isRefreshing) {
-                binding.srlRandomDish.isRefreshing = false
-            }
-            dataError?.let {
-                Log.i("kkkCat", "$dataError")
-            }
-        }
-
-        mViewModel.loadRandomDish.observe(viewLifecycleOwner) { loadDish ->
-            loadDish?.let {
-                Log.i("kkkCat", "$loadDish")
+            //viewModel.getRandomDish()
+            if (recipes.hasNext()) {
+                setUi(recipes.next())
+            } else {
+                viewModel.getRandomDishes(15)
             }
         }
     }
 
-    private fun setInUi(recipe: RandomDish.Recipe) {
+
+    private fun setUi(recipe: RandomDish.Recipe): Boolean {
 
         var dishType = "Others"
         var ingredients = ""
 
+        var favorited = false   //LOL
+        var inserted = false
+
         binding.apply {
+
+            ivFavoriteDish.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.ic_favorite_unselected
+                )
+            )
+
             Glide.with(requireActivity())
                 .load(recipe.image)
                 .centerCrop()
@@ -123,6 +139,7 @@ class RandomDishFragment : Fragment() {
                 R.string.lbl_estimate_cooking_time,
                 recipe.readyInMinutes.toString()
             )
+
             ivFavoriteDish.setOnClickListener {
                 val mFavDishViewModel: FavDishViewModel by viewModels {
                     FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
@@ -138,7 +155,7 @@ class RandomDishFragment : Fragment() {
                             "Others",
                             ingredients,
                             recipe.readyInMinutes.toString(),
-                            recipe.instructions,
+                            tvCookingDirection.text.toString(),
                             true
                         )
                     )
@@ -147,22 +164,38 @@ class RandomDishFragment : Fragment() {
 
                 favorited = !favorited
 
-                when {
-                    favorited -> binding.ivFavoriteDish.setImageDrawable(
+                when (favorited) {
+                    true -> binding.ivFavoriteDish.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireActivity(),
                             R.drawable.ic_favorite_selected
                         )
                     )
-                    else -> binding.ivFavoriteDish.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            requireActivity(),
-                            R.drawable.ic_favorite_unselected
+                    false -> {
+                        binding.ivFavoriteDish.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                requireActivity(),
+                                R.drawable.ic_favorite_unselected
+                            )
                         )
-                    )
+                        mFavDishViewModel.updateFavoriteByTitle(recipe.title, false)
+                    }
                 }
             }
+
+            srlRandomDish.isRefreshing = false
         }
+        return true
+    }
+
+    private fun showDialog(titleID: Int, messageId: Int) {
+        AlertDialog.Builder(requireActivity())
+            .setCancelable(false)
+            .setTitle(titleID)
+            .setMessage(messageId)
+            .setPositiveButton("Ok", DialogInterface.OnClickListener { dialog, _ ->
+                dialog.cancel()
+            }).show()
     }
 
     override fun onDestroyView() {

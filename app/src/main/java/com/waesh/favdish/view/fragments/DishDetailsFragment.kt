@@ -105,6 +105,7 @@ class DishDetailsFragment : Fragment(), MenuProvider {
                 tvCategory.text = dishDetailsArgs.dishDetails.category
                 tvIngredients.text = dishDetailsArgs.dishDetails.ingredients
                 tvCookingDirection.text = dishDetailsArgs.dishDetails.directionToCook
+
                 tvCookingTime.text =
                     resources.getString(
                         R.string.lbl_estimate_cooking_time,

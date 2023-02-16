@@ -1,7 +1,7 @@
 package com.waesh.favdish.viewmodel
 
 import androidx.lifecycle.*
-import com.waesh.favdish.model.database.FavDishRepository
+import com.waesh.favdish.model.repository.FavDishRepository
 import com.waesh.favdish.model.entities.FavDish
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +23,12 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
 
     fun update(item: FavDish) = viewModelScope.launch(Dispatchers.IO) {
         repository.updateFavDishDetail(item)
+    }
+
+    fun updateFavoriteByTitle(title: String, favorite: Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateFavoriteByTitle(title, favorite)
+        }
     }
 
     fun deleteDish(item: FavDish) {

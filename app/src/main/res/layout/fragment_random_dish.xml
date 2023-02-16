@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.RandomDishFragment">
 
+
     <ScrollView
         android:id="@+id/rl_dish_detail_main"
         android:layout_width="match_parent"
@@ -36,7 +37,8 @@
                     android:layout_gravity="top|end"
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/favorite_button_background"
-                    android:elevation="@dimen/_10sdp">
+                    android:elevation="@dimen/_10sdp"
+                    android:id="@+id/ll_favorite_icon">
 
                     <ImageView
                         android:id="@+id/iv_favorite_dish"
