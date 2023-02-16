@@ -4,18 +4,19 @@ Improved version of FavDish android application from Android 11 Jetpack Mastercl
 This project is a playground for me. I will keep experimenting and modifiying the code as I learn more. 
 ### Check the __master__ branch if code is not visible to you.
 
+
 Improvements
 ---
-- Cleaner and non-repetative code
+- Cleaner and non-repetitive code
 - Replaced deprecated APIs
 - More translatable
 - Filtering dishes shows filter category on the actionbar
 
 ⚒️TODO
 ---
-- Adding notification (it was removed) (Unlike the tutorial with a real notification this time.)
-- Replacing __RxJava__ with __Coroutines__ for network calls
-- Some UI changes (Theme support)
+- [x] Adding notification (it was removed) (Unlike the tutorial it will be a real notification this time.)
+- [x] Replacing __RxJava__ with __Coroutines__ for network calls
+- [ ] Some UI changes (Theme support)
 
 📚 Tech stack & Open-Source Libraries
 ---
