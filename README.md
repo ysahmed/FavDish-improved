@@ -10,12 +10,7 @@ Improvements
 - Replaced deprecated APIs
 - More translatable
 - Filtering dishes shows filter category on the actionbar
-
-⚒️TODO
----
-- [x] Adding notification (it was removed) (Unlike the tutorial it will be a real notification this time.)
-- [x] Replacing __RxJava__ with __Coroutines__ for network calls
-- [ ] Some UI changes (Theme support)
+- Removed RxJava with Kotlin coroutines 
 
 📚 Tech stack & Open-Source Libraries
 ---
